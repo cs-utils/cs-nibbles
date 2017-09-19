@@ -14,14 +14,12 @@ function wsTest() {
     console.log(new_uri);
 
     ws = new WebSocket(new_uri);
+    return ws
 
-    ws.onopen = function (event) {
-    }
-
-    ws.onmessage = function (p1) {
-        d = JSON.parse(p1.data);
-        console.log(d);
-    }
+    // ws.onmessage = function (p1) {
+    //     d = JSON.parse(p1.data);
+    //     console.log(d);
+    // }
 }
 
 function wsClose() {

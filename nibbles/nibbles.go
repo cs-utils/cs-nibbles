@@ -76,7 +76,7 @@ func (nibble *NibbleGame) Tick() *Board {
 		}
 
 		// Append head to snake and remove last snake segment
-		snake.segments = append([]SnakeSegment{newHead}, snake.segments[:len(snake.segments)-1]...)
+		snake.segments = append([]SnakeSegment{newHead}, snake.segments[:len(snake.segments)]...)
 	}
 
 	return &nibble.board
