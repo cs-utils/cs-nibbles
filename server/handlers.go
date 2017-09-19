@@ -2,8 +2,8 @@ package server
 
 import "net/http"
 import (
-	log "github.com/sirupsen/logrus"
 	"github.com/gorilla/websocket"
+	log "github.com/sirupsen/logrus"
 )
 
 func serveIndexPage(w http.ResponseWriter, r *http.Request) {
@@ -12,7 +12,7 @@ func serveIndexPage(w http.ResponseWriter, r *http.Request) {
 }
 
 var upgrader = websocket.Upgrader{
-	ReadBufferSize: 1024,
+	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
 
@@ -28,10 +28,10 @@ func serveWebsocket(h *Hub, w http.ResponseWriter, r *http.Request) {
 
 	// Successfully accepted new websocket connection, associate it with a new client and add it to the hub
 	client := &Client{
-		hub: h,
+		hub:  h,
 		conn: conn,
 	}
 
 	log.Debug("Sending client to hub")
-	h.register<-client
+	h.register <- client
 }

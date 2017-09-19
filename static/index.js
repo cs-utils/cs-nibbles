@@ -1,4 +1,6 @@
 // WS test
+var ws;
+
 function wsTest() {
     var loc = window.location, new_uri;
     if (loc.protocol === "https:") {
@@ -11,10 +13,17 @@ function wsTest() {
 
     console.log(new_uri);
 
-    var ws = new WebSocket(new_uri);
+    ws = new WebSocket(new_uri);
 
     ws.onopen = function (event) {
-        ws.send("sent message");
-        ws.close();
     }
+
+    ws.onmessage = function (p1) {
+        d = JSON.parse(p1.data);
+        console.log(d);
+    }
+}
+
+function wsClose() {
+    ws.close();
 }
