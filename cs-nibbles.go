@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"github.com/cs-utils/cs-nibbles/server"
+	log "github.com/sirupsen/logrus"
+)
 
 func main() {
-	fmt.Println("hello world")
+	log.SetLevel(log.DebugLevel)
+
+	ADDRESS := ":8080"
+
+	log.Info("Starting server on " + ADDRESS)
+	server := server.CreateServer(ADDRESS)
+	server.Start()
 }
