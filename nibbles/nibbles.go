@@ -25,15 +25,19 @@ func CreateGame(width, height int) *NibbleGame {
 	}
 
 	//TODO
-	//TEMP Init board with a single snake for testing
-	snake := &Snake{
-		id:        0,
-		direction: UP,
-		segments: []SnakeSegment{
-			SnakeSegment{x: 25, y: 2},
-		},
+	//TEMP Init board with some snakes for testing
+
+	for i := 0; i < 10; i++ {
+		snake := &Snake{
+			id:        uint8(i),
+			direction: UP,
+			segments: []SnakeSegment{
+				SnakeSegment{x: int8(i * 10), y: 25},
+			},
+		}
+
+		game.board.snakes = append(game.board.snakes, snake)
 	}
-	game.board.snakes = append(game.board.snakes, snake)
 
 	return game
 }

@@ -25,8 +25,8 @@ class Board {
         coords[2] = this.segmentSize;
         coords[3] = this.segmentSize;
 
-        console.log(x + ", " + y);
-        console.log(coords);
+        // console.log(x + ", " + y);
+        // console.log(coords);
         return coords;
     }
 
@@ -38,7 +38,7 @@ class Board {
 
         let snakes = snakeString.split(";");
 
-        console.log(snakes);
+        // console.log(snakes);
         // For each snake
         for (let i = 0; i < snakes.length; i++) {
             let segs = snakes[i].split(",");

@@ -16,7 +16,6 @@ func (s *Server) startGameLoop() {
 
 		// Update game logic and notify players of changes
 		case <-ticker.C:
-			log.Info("Got a tick")
 			board := s.nibbles.Tick()
 			s.hub.broadcastBoard <- board
 

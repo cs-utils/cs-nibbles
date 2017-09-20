@@ -5,6 +5,7 @@ import (
 	"github.com/cs-utils/cs-nibbles/nibbles"
 	"github.com/gorilla/websocket"
 	"encoding/json"
+	"time"
 )
 
 /* 	Container of all clients connected to the websocket server.
@@ -64,6 +65,8 @@ func (h *Hub) run() {
 
 		// Broadcast board to all players
 		case board := <-h.broadcastBoard:
+			prev := time.Now()
+
 			updateMessage := WebsocketMessage{
 				Type: MESSAGE_BOARD_UPDATE,
 				Data: board.SerializeBoardAsString(),
@@ -92,6 +95,8 @@ func (h *Hub) run() {
 					continue
 				}
 			}
+
+			log.WithField("timeTaken", time.Now().Sub(prev)).Debug("Sent board to clients")
 
 		// New client, add to client list
 		case client := <-h.register:
