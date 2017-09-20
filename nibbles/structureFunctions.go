@@ -1,6 +1,9 @@
 package nibbles
 
-import "strconv"
+import (
+	"strconv"
+	"bytes"
+)
 
 /* Functions that can be executed on the structures */
 
@@ -12,17 +15,21 @@ Each snake's data is separated by commas. The first element in
 the array will be the snake's ID
 */
 func (b *Board) SerializeBoardAsString() string {
-	result := ""
+	var buffer bytes.Buffer
 
 	for _, snake := range b.snakes {
-		result += strconv.Itoa(int(snake.id))
+		buffer.WriteString(strconv.Itoa(int(snake.id)))
 
 		for _, segment := range snake.segments {
-			result += "," + strconv.Itoa(int(segment.x)) + "," + strconv.Itoa(int(segment.y))
+			buffer.WriteString(",")
+			buffer.WriteString(strconv.Itoa(int(segment.x)))
+			buffer.WriteString(",")
+			buffer.WriteString(strconv.Itoa(int(segment.y)))
 		}
 
-		result += ";"
+		buffer.WriteString(";")
+
 	}
 
-	return result
+	return buffer.String()
 }
