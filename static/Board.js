@@ -1,8 +1,9 @@
 class Board {
-    constructor(hostElementId, width, height, segmentSize) {
+    constructor(hostElementId, width, height, segmentSize, padding) {
         this.width = width;
         this.height = height;
         this.segmentSize = segmentSize; // Square
+        this.padding = padding;
 
         this.hostElement = document.getElementById(hostElementId);
 
@@ -52,7 +53,8 @@ class Board {
                 let y = segs[j + 1];
                 let coords = this.logicalToPixel(x, y);
 
-                this.ctx.fillRect(coords[0], coords[1], coords[2], coords[3]);
+                this.ctx.fillRect(coords[0] + this.padding, coords[1] + this.padding,
+                    coords[2] - this.padding, coords[3] - this.padding);
             }
         }
     }

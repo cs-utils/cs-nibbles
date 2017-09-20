@@ -27,13 +27,17 @@ func CreateGame(width, height int) *NibbleGame {
 	//TODO
 	//TEMP Init board with some snakes for testing
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 1; i++ {
 		snake := &Snake{
 			id:        uint8(i),
 			direction: UP,
 			segments: []SnakeSegment{
-				SnakeSegment{x: int8(i * 10), y: 25},
+				SnakeSegment{x: int8(50), y: 25},
 			},
+		}
+
+		for j := 0; j < 50; j++ {
+			snake.segments = append(snake.segments, SnakeSegment{x: 50, y: 50})
 		}
 
 		game.board.snakes = append(game.board.snakes, snake)
@@ -80,8 +84,13 @@ func (nibble *NibbleGame) Tick() *Board {
 		}
 
 		// Append head to snake and remove last snake segment
-		snake.segments = append([]SnakeSegment{newHead}, snake.segments[:len(snake.segments)]...)
+		snake.segments = append([]SnakeSegment{newHead}, snake.segments[:len(snake.segments)-1]...)
 	}
 
 	return &nibble.board
+}
+
+// Change direction of snake on board
+func (nibble *NibbleGame) ChangeSnakeDirection(snakeID int, direction Direction) {
+	nibble.board.snakes[0].direction = direction
 }

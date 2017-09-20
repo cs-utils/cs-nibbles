@@ -32,6 +32,9 @@ func serveWebsocket(h *Hub, w http.ResponseWriter, r *http.Request) {
 		conn: conn,
 	}
 
+	// Start handling incoming websocket messages on a separate go-routine
+	go client.startIncomingMessageLoop()
+
 	log.Debug("Sending client to hub")
 	h.register <- client
 }

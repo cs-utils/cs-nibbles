@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <script src="/static/index.js"></script>
     <script src="/static/Board.js"></script>
+    <script src="/static/Websocket.js"></script>
 
 </head>
 <body>
@@ -14,7 +14,7 @@
 
     <input type="text" id="wsTestIn">
     <!--<button onclick="wsTest()">Test Websockets</button>-->
-    <button onclick="wsClose()">Close Socket</button>
+    <button onclick="conn.socket.close()">Close Socket</button>
 
     <script src="/static/main.js"></script>
 </body>

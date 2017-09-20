@@ -19,6 +19,12 @@ func (s *Server) startGameLoop() {
 			board := s.nibbles.Tick()
 			s.hub.broadcastBoard <- board
 
+		case req := <-s.hub.updateDirection:
+			log.Info("Hub: Changing snake direction")
+
+			//TODO: ID
+			s.nibbles.ChangeSnakeDirection(0, req.direction)
+
 		case shouldStop := <-s.stopGameloopChan:
 			if shouldStop {
 				log.Info("Stopping server game loop")

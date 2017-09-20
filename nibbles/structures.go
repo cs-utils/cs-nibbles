@@ -10,10 +10,10 @@ type Board struct {
 type Direction uint8
 
 const (
-	UP Direction = iota
-	DOWN
-	LEFT
-	RIGHT
+	UP    Direction = 0
+	DOWN  Direction = 1
+	LEFT  Direction = 2
+	RIGHT Direction = 3
 )
 
 type Snake struct {

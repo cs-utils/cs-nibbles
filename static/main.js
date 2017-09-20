@@ -1,8 +1,26 @@
-let b = new Board("gameScreen", 500, 500, 5);
+let b = new Board("gameScreen", 500, 500, 5, 1);
+let conn = new Websocket(redrawBoard);
 
-// b.drawFromSnakeStrings("15,0,0,0,1;17,50,50,50,51,50,52");
+document.addEventListener("keydown", keyDownHandler);
+function keyDownHandler(e) {
+    switch (e.keyCode) {
+        case 38:
+            conn.sendChangeDirection(UP);
+            break;
 
-let s = "15";
+        case 40:
+            conn.sendChangeDirection(DOWN);
+            break;
+
+        case 37:
+            conn.sendChangeDirection(LEFT);
+            break;
+
+        case 39:
+            conn.sendChangeDirection(RIGHT);
+            break;
+    }
+}
 
 demo();
 
@@ -11,18 +29,8 @@ function sleep(ms) {
 }
 
 async function demo() {
-    // for (let i = 0; i < 500; i++) {
-    //
-    //     s += ",30," + i;
-    //     b.drawFromSnakeStrings(s);
-    //     await sleep(50);
-    // }
+}
 
-    // Connect to websocket
-    var websocket = wsTest();
-
-    websocket.onmessage = function (event) {
-        var msg = JSON.parse(event.data);
-        b.drawFromSnakeStrings(msg.data)
-    }
+async function redrawBoard(boardUpdateString) {
+    b.drawFromSnakeStrings(boardUpdateString)
 }

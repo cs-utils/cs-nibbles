@@ -1,11 +1,11 @@
 package server
 
 import (
-	log "github.com/sirupsen/logrus"
+	"encoding/json"
 	"github.com/cs-utils/cs-nibbles/nibbles"
 	"github.com/gorilla/websocket"
-	"encoding/json"
-	"time"
+	log "github.com/sirupsen/logrus"
+	//"time"
 )
 
 /* 	Container of all clients connected to the websocket server.
@@ -26,31 +26,22 @@ type Hub struct {
 	// Broadcast board
 	broadcastBoard chan *nibbles.Board
 
+	// Client requests to update direction
+	updateDirection chan requestChangeSnakeDirection
+
 	// Stop the server
 	shutdown chan bool
 }
 
-// All messages communicated between clients and the server will be WebsocketMessages
-// serialized as JSON.
-// 	Type: Purpose of message. Can be any of:
-//		0:	Board Update. Sent from server to clients, represents current state of board.
-const (
-	MESSAGE_BOARD_UPDATE int = iota
-)
-
-type WebsocketMessage struct {
-	Type int    `json:"type"`
-	Data string `json:"data"`
-}
-
 func newHub() *Hub {
 	return &Hub{
-		clients:    make(map[*Client]bool),
-		broadcast:  make(chan []byte),
-		register:   make(chan *Client),
-		deregister: make(chan *Client),
-		shutdown:   make(chan bool),
-		broadcastBoard: make(chan *nibbles.Board),
+		clients:         make(map[*Client]bool),
+		broadcast:       make(chan []byte),
+		register:        make(chan *Client),
+		deregister:      make(chan *Client),
+		shutdown:        make(chan bool),
+		broadcastBoard:  make(chan *nibbles.Board),
+		updateDirection: make(chan requestChangeSnakeDirection),
 	}
 }
 
@@ -65,7 +56,7 @@ func (h *Hub) run() {
 
 		// Broadcast board to all players
 		case board := <-h.broadcastBoard:
-			prev := time.Now()
+			//prev := time.Now()
 
 			updateMessage := WebsocketMessage{
 				Type: MESSAGE_BOARD_UPDATE,
@@ -96,7 +87,8 @@ func (h *Hub) run() {
 				}
 			}
 
-			log.WithField("timeTaken", time.Now().Sub(prev)).Debug("Sent board to clients")
+			//delta := time.Now().Sub(prev)
+			//log.WithField("timeTaken", delta).Debug("Sent board to clients")
 
 		// New client, add to client list
 		case client := <-h.register:
