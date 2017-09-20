@@ -23,6 +23,6 @@ async function demo() {
 
     websocket.onmessage = function (event) {
         var msg = JSON.parse(event.data);
-        b.drawFromSnakeStrings(msg.data)
+        b.drawFromSnakeStrings(msg.data);
     }
 }
